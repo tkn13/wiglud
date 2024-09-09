@@ -1,0 +1,5 @@
+Status Codes:
+102: Processing
+200: Success
+204: No Content (when there is no ongoing generation)
+500: Internal Server Error

@@ -1,0 +1,43 @@
+Endpoint: GET /api/status
+Purpose: check music generation in progress from same user.
+Request Parameters: requestId
+
+//Request Body {
+    "requestId": "0001"
+}
+
+//Processing Response {
+    "requestId": "0001",
+    "Genre": "Pop",
+    "Duration": "1m",
+    "Instrument": "Guitar",
+    "status": "Processing",
+    "statusCode": 102,
+    "message": "File generation in progress",
+    "loading": true,
+    "fileUrl": null
+}
+
+//No Content Response {
+    "requestId": "0002",
+    "Genre": null,
+    "Duration": null,
+    "Instrument": null,
+    "status": "No Content",
+    "statusCode": 204,
+    "message": "No ongoing file generation for this request",
+    "loading": false,
+    "fileUrl": null
+}
+
+//Success Response {
+    "requestId": "0003",
+    "Genre": "Rock",
+    "Duration": "2m",
+    "Instrument": "Guitar",
+    "status": "Success",
+    "statusCode": 200,
+    "message": "File generated successfully",
+    "loading": false,
+    "fileUrl": "https://example.com/files/generatedSong.mp3"
+}
