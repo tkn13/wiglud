@@ -1,5 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const { getCache } = require("../../util/cache-modifier");
+const WorkStatus = require("../../model/enum/WorkStatus");
 
 
 async function statusEndpoint(requestId){
@@ -8,7 +9,7 @@ async function statusEndpoint(requestId){
         return {
             status_code: StatusCodes.BAD_REQUEST,
             message: {
-                message: "Request Id is missing"
+                message: "cookie_id is missing"
             }
         }
     }
@@ -19,15 +20,34 @@ async function statusEndpoint(requestId){
         return {
             status_code: StatusCodes.NOT_FOUND,
             message: {
-                message: "Request Id not found"
+                message: "cookie_id not found"
             }
         }
     }
 
-    return {
-        status_code: StatusCodes.OK,
-        message: cache
+    const cache_process = cache.status;
+
+    if( cache_process === WorkStatus.Processing ){
+        return {
+            status_code: StatusCodes.PROCESSING,
+            message: cache
+        }
     }
+    
+    if( cache_process === WorkStatus.Success ){
+        return {
+            status_code: StatusCodes.OK,
+            message: cache
+        }
+    }
+
+    return {
+        status_code: StatusCodes.INTERNAL_SERVER_ERROR,
+        message: {
+            message: "Unknown error"
+        }
+    }
+    
 
 }
 

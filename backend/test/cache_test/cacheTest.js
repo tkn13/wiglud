@@ -1,4 +1,4 @@
-const { setTestFile, resetFile, getCache } = require("../../../util/cache-modifier")
+const { setTestFile, resetFile, getCache } = require("../../util/cache-modifier")
 
 
 /* 

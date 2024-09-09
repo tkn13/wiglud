@@ -4,4 +4,4 @@ const Instrument = Object.freeze({
     Saxophone: 'saxophone',
 });
 
-export default Instrument;
+module.exports = Instrument;

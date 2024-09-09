@@ -1,6 +1,6 @@
-import Genre from "./enum/Genre.js";
-import Instrument from "./enum/Instrument";
-import WorkStatus from "./enum/WorkStatus";
+const Genre = require('./enum/Genre');
+const Instrument = require('./enum/Instrument');
+const WorkStatus = require('./enum/WorkStatus');
 
 const cacheModel = {
     "id": "",
@@ -14,4 +14,7 @@ const cacheModel = {
     "file_url": null
 }
 
-export default cacheModel;
+module.exports = {
+    cacheModel
+}
+

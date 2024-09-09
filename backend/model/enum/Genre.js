@@ -5,4 +5,4 @@ const Genre = Object.freeze({
 
 });
 
-export default Genre;
+module.exports = Genre;
