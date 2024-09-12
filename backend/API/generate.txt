@@ -1,0 +1,34 @@
+Endpoint: POST /api/music/generate
+Purpose: To send a request for generating new music.
+Request Parameters: requestId
+
+//Request Body {
+    "requestId": "0004"
+    "Genre": "Pop",
+    "Duration": 1,
+    "Instrument": "Guitar"
+}
+
+//Processing Response {
+    "requestId": "0004"
+    "Genre": "Pop",
+    "Duration": 1,
+    "Instrument": "Guitar",
+    "status": "Processing",
+    "statusCode": 102,
+    "message": "File generation in progress",
+    "loading": true,
+    "fileUrl": null
+}
+
+or //Error Response {
+    "requestId": "0004"
+    "Genre": "Pop",
+    "Duration": 1,
+    "Instrument": "Guitar",
+    "status": "Error",
+    "statusCode": 500,
+    "message": "Internal server error during file generation",
+    "loading": false,
+    "fileUrl": null
+}

@@ -1,0 +1,49 @@
+Endpoint: GET /api/status
+Purpose: check music generation in progress from same user.
+Request Parameters: requestId
+
+//Request Body {} no body required
+//Cookies: name=cookie_id
+
+
+// Response List
+
+    Invalid Request (cookie_id is undefined || null || empty string)
+        status 400
+        {
+            message: "cookie_id is missing"
+        }
+
+    valid request but no cookie_id found
+        status 404
+        {
+            message: "cookie_id not found"
+        }
+
+    valid request and cookie_id found and status are progress
+        status 102
+        {
+            "id": "0001",
+            "genre": "Pop",
+            "duration": "1m",
+            "instrument": "Guitar",
+            "status": "Processing",
+            "status_code": 102,
+            "message": "File generation in progress",
+            "loading": true,
+            "file_url": null
+        }
+
+    valid request and cookie_id found and status are completed
+        status 200
+        {
+            "id": "0001",
+            "genre": "Pop",
+            "duration": "1m",
+            "instrument": "Guitar",
+            "status": "Success",
+            "status_code": 200,
+            "message": "File generation completed",
+            "loading": false,
+            "file_url": "https://www.example.com/file.mp3"
+        }
