@@ -1,6 +1,6 @@
 Endpoint: GET /api/status
 Purpose: check music generation in progress from same user.
-Request Parameters: requestId
+Request Parameters: cookie_id
 
 //Request Body {} no body required
 //Cookies: name=cookie_id
