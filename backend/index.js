@@ -35,7 +35,7 @@ app.post('/api/music/generate', (req, res) => {
 
 app.get('/api/music/ai', (req,res) => {
   const pythonScriptPath = path.join('../ai/', 'interface.py');
-  const pythonProcess = spawn('python', [pythonScriptPath]);
+  const pythonProcess = spawn('python3', [pythonScriptPath]);
 
   let output = '';
   pythonProcess.stdout.on('data', (data) => {
