@@ -2,6 +2,8 @@ const express = require("express");
 const cookieParser = require('cookie-parser');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
+const { spawn } = require('child_process');
+const path = require('path');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -30,6 +32,28 @@ app.get('/api/music/status', async (req, res) => {
 app.post('/api/music/generate', (req, res) => {
 
 });
+
+app.get('/api/music/ai', (req,res) => {
+  const pythonScriptPath = path.join('../ai/', 'interface.py');
+  const pythonProcess = spawn('python3', [pythonScriptPath]);
+
+  let output = '';
+  pythonProcess.stdout.on('data', (data) => {
+      output += data.toString();
+  });
+
+  pythonProcess.stderr.on('data', (data) => {
+      console.error(`Python Error: ${data}`);
+  });
+
+  pythonProcess.on('close', (code) => {
+      if (code === 0) {
+          res.send(`Python Run Success`);
+      } else {
+          res.status(500).send('Error running Python script');
+      }
+  });
+})
 
 app.listen(3000, () => {
   console.log(`Server is running on http://${HOST}:${PORT}`);
