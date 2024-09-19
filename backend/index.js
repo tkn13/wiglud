@@ -2,6 +2,8 @@ const express = require("express");
 const cookieParser = require('cookie-parser');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
+const { spawn } = require('child_process');
+const path = require('path');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -9,10 +11,8 @@ app.use(cookieParser());
 const PORT = 3000;
 const HOST = "localhost";
 
-
 const { statusEndpoint } = require('./service/status/statusEndpoint');
-
-
+const { generateEndpoint } = require("./service/generate/generateEndpoint");
 
 app.get('/api/music/status', async (req, res) => {
 
@@ -27,8 +27,16 @@ app.get('/api/music/status', async (req, res) => {
 
 });
 
-app.post('/api/music/generate', (req, res) => {
-
+app.post('/api/music/generate', async (req, res) => {
+    const { genre, duration, instrument } = req.body;
+    const requestId = uuidv4();
+  
+    const resualt = await generateEndpoint(genre, duration, instrument, requestId);
+  
+    const resualtCode = resualt.status_code;
+    const requestData = resualt.message;
+  
+    res.status(resualtCode).send(requestData);
 });
 
 app.listen(3000, () => {
