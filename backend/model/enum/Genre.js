@@ -1,5 +1,5 @@
 const Genre = Object.freeze({
-    default: 'default',
+    default: 'Default',
     Pop: 'Pop',
     Rock: 'Rock'
 
