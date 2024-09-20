@@ -1,8 +1,8 @@
 const Duration = Object.freeze({
     default: 'Default',
-    '1': '1 minute',
-    '2': '2 minutes',
-    '3': '3 minutes'
+    '1': '1m',
+    '2': '2m',
+    '3': '3m'
 });
 
 module.exports = Duration;
