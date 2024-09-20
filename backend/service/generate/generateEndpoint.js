@@ -4,6 +4,7 @@ const { cacheModel } = require("../../model/cacheModel");
 const Genre  = require("../../model/enum/Genre");
 const Instrument  = require("../../model/enum/Instrument");
 const WorkStatus = require("../../model/enum/WorkStatus");
+const Duration = require("../../model/enum/Duration");
 
 async function generateEndpoint(genre, duration, instrument, requestId) {
   if (genre === undefined || genre === null || genre === "") {
@@ -51,7 +52,14 @@ async function generateEndpoint(genre, duration, instrument, requestId) {
     };
   }
 
-  //เช็คว่ามันตรงกับอันไหน แล้วค่อยเอามาใส่
+  if (!Object.values(Duration).includes(duration)) {
+    return {
+      status_code: StatusCodes.BAD_REQUEST,
+      message: {
+        message: `Invalid duration. Allowed durations are: ${Object.values(Duration).join(", ")}.`,
+      },
+    };
+  }
 
   const cacheModel = {
     id: requestId,
