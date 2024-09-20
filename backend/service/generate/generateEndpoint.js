@@ -35,7 +35,7 @@ async function generateEndpoint(genre, duration, instrument, requestId) {
 
   if (!genre || !Object.values(Genre).includes(genre)) {
     return {
-      status_code: StatusCodes.CONFLICT,
+      status_code: StatusCodes.BAD_REQUEST,
       message: {
         message: `Invalid genre. Allowed genres are: ${Object.values(Genre).join(", ")}.`,
       },
