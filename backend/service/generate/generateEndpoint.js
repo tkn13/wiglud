@@ -33,15 +33,6 @@ async function generateEndpoint(genre, duration, instrument, requestId) {
     };
   }
 
-  if (requestId === undefined || requestId === null || requestId === "") {
-    return {
-      status_code: StatusCodes.BAD_REQUEST,
-      message: {
-        message: "cookie_id is missing",
-      },
-    };
-  }
-
   if (!genre || !Object.values(Genre).includes(genre)) {
     return {
       status_code: StatusCodes.CONFLICT,
