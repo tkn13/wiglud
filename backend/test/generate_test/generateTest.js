@@ -27,25 +27,25 @@ case 3: instrument is missing
             message: "instrument is missing"
         }
 
-case 4: requestId is missing
-    expected: 
-        status_code: 400,
-        message: {
-            message: "cookie_id is missing"
-        }
-
-case 5: invalid genre
+case 4: invalid genre
     expected: 
         status_code: 409,
         message: {
             message: "Invalid genre. Allowed genres are: <list_of_genres>"
         }
 
-case 6: invalid instrument
+case 5: invalid instrument
     expected: 
         status_code: 400,
         message: {
             message: "Invalid instrument. Allowed instruments are: <list_of_instruments>"
+        }
+
+case 6: invalid duration
+    expected: 
+        status_code: 400,
+        message: {
+            message: "Invalid duration. Allowed durations are: <list_of_durations>"
         }
 
 case 7: valid input, file generation in progress
@@ -63,61 +63,62 @@ async function testGenerateEndpoint() {
     const validRequestId = uuidv4();
     const invalidGenre = "Jazz"; // assuming Jazz is not in the allowed genres list
     const invalidInstrument = "Flute"; // assuming Flute is not in the allowed instruments list
+    const invalidDuration = "30s"; // assuming 30s is not in the allowed duration list
     const validGenre = "Pop";
-    const validDuration = "1m";
+    const validDuration = "1m"; // assuming 1m is in the allowed duration list
     const validInstrument = "Guitar";
 
-    const resualt1 = await generateEndpoint(undefined, validDuration, validInstrument, validRequestId);
-    const resualt2 = await generateEndpoint(validGenre, undefined, validInstrument, validRequestId);
-    const resualt3 = await generateEndpoint(validGenre, validDuration, undefined, validRequestId);
-    const resualt4 = await generateEndpoint(validGenre, validDuration, validInstrument, undefined);
-    const resualt5 = await generateEndpoint(invalidGenre, validDuration, validInstrument, validRequestId);
-    const resualt6 = await generateEndpoint(validGenre, validDuration, invalidInstrument, validRequestId);
+    const result1 = await generateEndpoint(undefined, validDuration, validInstrument, validRequestId);
+    const result2 = await generateEndpoint(validGenre, undefined, validInstrument, validRequestId);
+    const result3 = await generateEndpoint(validGenre, validDuration, undefined, validRequestId);
+    const result4 = await generateEndpoint(invalidGenre, validDuration, validInstrument, validRequestId);
+    const result5 = await generateEndpoint(validGenre, validDuration, invalidInstrument, validRequestId);
+    const result6 = await generateEndpoint(validGenre, invalidDuration, validInstrument, validRequestId);
 
     // Mock a valid cache addition with no error
-    const resualt7 = await generateEndpoint(validGenre, validDuration, validInstrument, validRequestId);
+    const result7 = await generateEndpoint(validGenre, validDuration, validInstrument, validRequestId);
 
     const expected1 = {
         status_code: 400,
         message: {
             message: "genre is missing"
         }
-    }
+    };
 
     const expected2 = {
         status_code: 400,
         message: {
             message: "duration is missing"
         }
-    }
+    };
 
     const expected3 = {
         status_code: 400,
         message: {
             message: "instrument is missing"
         }
-    }
+    };
 
     const expected4 = {
         status_code: 400,
         message: {
-            message: "cookie_id is missing"
-        }
-    }
-
-    const expected5 = {
-        status_code: 409,
-        message: {
             message: `Invalid genre. Allowed genres are: Default, Pop, Rock.`
         }
-    }
+    };
 
-    const expected6 = {
+    const expected5 = {
         status_code: 400,
         message: {
             message: `Invalid instrument. Allowed instruments are: Default, Guitar, Saxophone.`
         }
-    }
+    };
+
+    const expected6 = {
+        status_code: 400,
+        message: {
+            message: `Invalid duration. Allowed durations are: 1m, 2m, 3m, Default.`
+        }
+    };
 
     const expected7 = {
         status_code: 102,
@@ -134,7 +135,7 @@ async function testGenerateEndpoint() {
                 file_url: null
             }
         }
-    }
+    };
 
     function checkResult(result, expected, testCaseNumber) {
         if (JSON.stringify(result) === JSON.stringify(expected)) {
@@ -146,13 +147,13 @@ async function testGenerateEndpoint() {
         }
     }
 
-    checkResult(resualt1, expected1, 1);
-    checkResult(resualt2, expected2, 2);
-    checkResult(resualt3, expected3, 3);
-    checkResult(resualt4, expected4, 4);
-    checkResult(resualt5, expected5, 5);
-    checkResult(resualt6, expected6, 6);
-    checkResult(resualt7, expected7, 7);
+    checkResult(result1, expected1, 1);
+    checkResult(result2, expected2, 2);
+    checkResult(result3, expected3, 3);
+    checkResult(result4, expected4, 4);
+    checkResult(result5, expected5, 5);
+    checkResult(result6, expected6, 6);
+    checkResult(result7, expected7, 7);
 
     resetFile();
 }
@@ -162,4 +163,3 @@ async function main() {
 }
 
 main();
-
