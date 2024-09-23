@@ -1,14 +1,31 @@
-# Base image with Python 3.8 and TensorFlow support
-FROM tensorflow/tensorflow:latest
+FROM node:20
 
-# Set the working directory in the container to /ai
+# Update and install Python
+RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
+
+# Create a virtual environment for Python
+RUN python3 -m venv /opt/venv
+
+# Upgrade pip in the virtual environment
+RUN /opt/venv/bin/pip install --upgrade pip \
+&& /opt/venv/bin/pip install numpy music21 keras tensorflow
+
+# Create app directory
+WORKDIR /app/backend
+
+# Setup Node.js
+COPY /backend/package*.json ./
+RUN npm install
+
+COPY /backend .
+
+# Expose the port your app runs on
+EXPOSE 3000
+
+# Setup Python
 WORKDIR /app/ai
+COPY /ai /app/ai/
 
-# Copy the 'ai' directory from the host to the container
-COPY ai/ /app/ai
-
-# Install the required Python packages
-RUN pip install --no-cache-dir numpy music21 keras
-
-# Run the Python script
-CMD ["python", "interface.py"]
+# Start the Node.js application
+WORKDIR /app/backend
+CMD ["npm", "start"]
