@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiglud Music Generator</title>
+    <link rel="stylesheet" href="stylesIndex1.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <h1>Wiglud Music Generator</h1>
+    
+    <div class="music-generator">
+        <div class="controls">
+            <select name="type-of-music" id="type-of-music">
+                <option value="" disabled selected>TYPE OF MUSIC</option>
+                <option value="classical">Classical</option>
+                <option value="jazz">Jazz</option>
+                <option value="rock">Rock</option>
+                <option value="pop">Pop</option>
+            </select>
+
+            <select name="instrument" id="instrument">
+                <option value="" disabled selected>INSTRUMENT</option>
+                <option value="guitar">Guitar</option>
+                <option value="piano">Piano</option>
+                <option value="violin">Violin</option>
+                <option value="saxophone">Saxophone</option>
+            </select>
+
+            <select name="length" id="length">
+                <option value="" disabled selected>LENGTH</option>
+                <option value="1min">1 minute</option>
+                <option value="2min">2 minutes</option>
+                <option value="3min">3 minutes</option>
+            </select>
+        </div>
+
+        <button onclick="generateMusic()">GENERATE MUSIC HERE!</button>
+    </div>
+
+    <script src="scriptIndex1.js"></script> <!-- Link to the JavaScript file -->
+</body>
+</html>
