@@ -1,5 +1,5 @@
 const Status = Object.freeze({
-    default: 'default',
+    default: 'Default',
     Processing: 'Processing',
     Success: 'Success',
 });

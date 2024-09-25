@@ -1,43 +1,43 @@
 Endpoint: GET /api/music/time-remaining
 Purpose: To check the remaining time from generating music.
-Request Parameters: requestId
+Request Parameters: request_id
 
 //Request Body {
-    "requestId": "0005"
+    "request_id": "0005"
 }
 
 //Processing Response {
-    "requestId": "0005",
-    "Genre": "Jazz",
-    "Duration": "2m",
-    "Instrument": "Sax",
+    "request_id": "0005",
+    "genre": "Jazz",
+    "duration": 2,
+    "instrument": "Sax",
     "status": "Processing",
-    "statusCode": 102,
+    "status_code": StatusCodes.PROCESSING,
     "message": "Estimated remaining time",
     "loading": true,
-    "timeRemaining": "2 minutes"
+    "time_remaining": "2 minutes"
 }
 
 //No Content Response {
-    "requestId": "0005",
-    "Genre": null,
-    "Duration": null,
-    "Instrument": null,
+    "request_id": "0005",
+    "genre": null,
+    "duration": null,
+    "instrument": null,
     "status": "No Content",
-    "statusCode": 204,
+    "status_code": StatusCodes.NO_CONTENT,
     "message": "No ongoing file generation for this request",
     "loading": false,
-    "timeRemaining": null
+    "time_remaining": null
 }
 
 //Success Response {
-    "requestId": "0005",
-    "Genre": "Jazz",
-    "Duration": "2m",
-    "Instrument": "Sax",
+    "request_id": "0005",
+    "genre": "Jazz",
+    "duration": 2,
+    "instrument": "Sax",
     "status": "Success",
-    "statusCode": 200,
+    "status_code": StatusCodes.OK,
     "message": "File generated successfully",
     "loading": false,
-    "timeRemaining": "0 minutes"
+    "time_remaining": "0 minutes"
 }
