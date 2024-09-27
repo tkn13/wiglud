@@ -31,14 +31,14 @@ app.get('/api/music/status', async (req, res) => {
 app.get('/api/music/:id', async (req, res) => {
     const cookie_id = req.params.id;
 
-    const result = await downloadEndpoint(cookie_id);
+    const resualt = await downloadEndpoint(cookie_id);
 
     const resualtCode = resualt.status_code;
     const requestData = resualt.message;
-    const resualtFilePath = result.filePath;
+    const resualtFilePath = resualt.filePath;
 
     if (resualtFilePath) {
-        return res.download(resultFilePath);
+        return res.download(resualtFilePath);
     }
 
     res.status(resualtCode).send(requestData);
