@@ -34,7 +34,8 @@ const downloadEndpoint = async (requestId) => {
 
         return {
             status_code: StatusCodes.INTERNAL_SERVER_ERROR,
-            message: 'Internal Server Error'
+            message: 'Internal Server Error',
+            filePath: null
         };
     }
 };
