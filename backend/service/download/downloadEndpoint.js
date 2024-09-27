@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const { statusEndpoint } = require('../status/statusEndpoint');
 
-const downloadEndpoint = async (requestId, res) => {
+const downloadEndpoint = async (requestId) => {
     try {
         const statusResult = await statusEndpoint(requestId);
 
