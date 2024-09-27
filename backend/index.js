@@ -28,41 +28,21 @@ app.get('/api/music/status', async (req, res) => {
 
 });
 
-// app.get('/api/music/:id', async (req, res) => {
-//     // const cookie_id = req.cookies.cookie_id;
-//     const cookie_id = req.params.id;
-
-//     console.log(cookie_id)
-//     const resualt = await downloadEndpoint(cookie_id, res);
-
-//     const resualtCode = resualt.status_code;
-//     const resualtData = resualt.message;
-//     const resualtFilePath = resualt.filePath;
-
-//     res.status(resualtCode).send(resualtData);
-//     res.download(resualtFilePath);
-// });
-
 app.get('/api/music/:id', async (req, res) => {
     const cookie_id = req.params.id;
 
     const result = await downloadEndpoint(cookie_id);
 
-    res.status(result.status_code);
+    const resualtCode = resualt.status_code;
+    const requestData = resualt.message;
+    const resualtFilePath = result.filePath;
 
-    if (result.filePath) {
-        return res.download(result.filePath, (err) => {
-            if (err) {
-                console.error("Download error:", err);
-                return res.status(500).send('Could not download the file');
-            }
-        });
-    } else {
-        return res.send(result.message);
+    if (resualtFilePath) {
+        return res.download(resultFilePath);
     }
+
+    res.status(resualtCode).send(requestData);
 });
-
-
 
 app.post('/api/music/generate', async (req, res) => {
     const { genre, duration, instrument } = req.body;
