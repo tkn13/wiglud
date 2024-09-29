@@ -1,6 +1,7 @@
 import glob
 import pickle
 import numpy
+import sys
 from music21 import converter, instrument, note, chord , instrument, note, stream
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
@@ -13,6 +14,8 @@ from keras.layers import Activation
 from keras.layers import BatchNormalization as BatchNorm
 from keras.utils import to_categorical
 from keras.callbacks import ModelCheckpoint
+
+JRpgModelPath = r"../ai/model/MusicGen_100.keras"
 
 def get_notes():
     """ Get all the notes and chords from the midi files in the midi_songs directory """
@@ -84,7 +87,7 @@ def create_network(network_input, n_vocab):
 
     return model
 
-def generate_notes(model, network_input, pitchnames, n_vocab):
+def generate_notes(model, network_input, pitchnames, n_vocab, noteAmount):
     """ Generate notes from the neural network based on a sequence of notes """
     # Pick a random sequence from the input as a starting point for the prediction
     start = numpy.random.randint(0, len(network_input) - 1)
@@ -95,7 +98,7 @@ def generate_notes(model, network_input, pitchnames, n_vocab):
     prediction_output = []
 
     # Generate 500 notes
-    for note_index in range(240):
+    for note_index in range(noteAmount*240):
         prediction_input = numpy.reshape(pattern, (1, len(pattern), 1))
         prediction_input = prediction_input / float(n_vocab)
 
@@ -110,10 +113,17 @@ def generate_notes(model, network_input, pitchnames, n_vocab):
 
     return prediction_output
 
-def create_midi(prediction_output):
+def create_midi(prediction_output, instrumentType):
     """ Convert the output from the prediction to notes and create a midi file from the notes """
     offset = 0
     output_notes = []
+    if instrumentType == "piano" :
+        chosen_instrument = instrument.Piano()
+    elif instrumentType == "guitar" :
+        chosen_instrument = instrument.Guitar()
+    elif instrumentType == "saxophone" :
+        chosen_instrument = instrument.SopranoSaxophone()
+    else : chosen_instrument = instrument.Piano()
 
     # Open a text file to write the notes and chords
     with open('../ai/output_notes.txt', 'w') as text_file:
@@ -126,7 +136,7 @@ def create_midi(prediction_output):
                 notes = []
                 for current_note in notes_in_chord:
                     new_note = note.Note(int(current_note))
-                    new_note.storedInstrument = instrument.Soprano()
+                    new_note.storedInstrument = chosen_instrument
                     notes.append(new_note)
                 new_chord = chord.Chord(notes)
                 new_chord.offset = offset
@@ -137,7 +147,7 @@ def create_midi(prediction_output):
             else:
                 new_note = note.Note(pattern)
                 new_note.offset = offset
-                new_note.storedInstrument = instrument.Soprano()
+                new_note.storedInstrument = chosen_instrument
                 output_notes.append(new_note)
                 # Write note to text file
                 text_file.write(f"Note: {pattern} at offset {offset}\n")
@@ -146,21 +156,43 @@ def create_midi(prediction_output):
             offset += 0.5
 
     midi_stream = stream.Stream(output_notes)
-    midi_stream.insert(0, instrument.Soprano())
+    midi_stream.insert(0, chosen_instrument)
     midi_stream.write('midi', fp='../ai/test_output.mid')
 
-notes = get_notes()
+def MusicTypeSelector(musicType):
+    if musicType == "jrpg":
+        return JRpgModelPath
+    else : 
+        print("Incorrect Type")
+        exit()
 
-n_vocab = len(set(notes))
-pitchnames = sorted(set(item for item in notes))
+def GenerateMusic(duration, musicType, instrumentType):
+    notes = get_notes()
+    checkpoint_path = MusicTypeSelector(musicType)
+    n_vocab = len(set(notes))
+    pitchnames = sorted(set(item for item in notes))
+    network_input, network_output = prepare_sequences(notes, pitchnames, n_vocab)
+    model = create_network(network_output, n_vocab)
 
-network_input, network_output = prepare_sequences(notes, pitchnames, n_vocab)
+    model.load_weights(checkpoint_path)
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
 
-checkpoint_path = r"../ai/model/MusicGen_100.keras"
-model = create_network(network_output, n_vocab)
+    prediction_output = generate_notes(model, network_input, pitchnames, n_vocab, duration)
+    create_midi(prediction_output, instrumentType)
 
-model.load_weights(checkpoint_path)
-model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+if __name__ == "__main__":
+    # Ensure the function name and parameters are passed
+    if len(sys.argv) == 4 :
+        duration = int(sys.argv[1])
+        music_Type = sys.argv[2]
+        instrument_Type = sys.argv[3]
+        # duration = 1
+        # music_Type = "jrpg"
+        # instrument_Type = "piano"
 
-prediction_output = generate_notes(model, network_input, pitchnames, n_vocab)
-create_midi(prediction_output)
+        try:
+            GenerateMusic(duration, music_Type, instrument_Type)
+        except Exception as e:
+            print(f"Error executing function: {str(e)}")
+    else:
+        print("No function specified")
