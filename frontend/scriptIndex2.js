@@ -16,26 +16,40 @@ function displayRandomMessage() {
 displayRandomMessage();
 
 // setTimeout(() => {
-        //     window.location.href = 'index3.html';
-        // }, 15000);
+//     window.location.href = 'index3.html';
+// }, 15000);
 
 async function fetchMusic() {
     try {
-        let response = await fetch('path'); // ใส่ URL ของไฟล์เพลง MP3 ที่ต้องการ
+        const response = await fetch('/api/status', {
+            method: 'GET',
+            credentials: 'include'  // ส่งคุกกี้ไปด้วย (ต้องแน่ใจว่าคุกกี้ cookie_id ถูกแนบไป)
+        });
 
-        // เช็คว่าการร้องขอสำเร็จหรือไม่
         if (response.ok) {
-            // เมื่อได้รับไฟล์ mp3 ให้เปลี่ยนไปหน้า index3.html
-            window.location.href = 'index3.html';
+            const data = await response.json();
+
+            // ตรวจสอบว่าการสร้างเพลงเสร็จสมบูรณ์หรือไม่
+            if (data.status_code === 200) {
+                const fileUrl = data.file_url;  // ดึง URL ของไฟล์เพลงจาก response
+
+                console.log("File URL:", fileUrl);
+
+                // นำ URL ไปใช้ในปุ่มดาวน์โหลดหรือแสดงผลในหน้าเว็บ
+                document.getElementById('downloadButton').setAttribute('href', fileUrl);
+                window.location.href = 'index3.html';
+            } else {
+                console.error("Something went wrong:", data.message);
+            }
         } else {
-            // ถ้ามีข้อผิดพลาดในการดึงไฟล์แสดงข้อความแจ้งเตือน
-            document.getElementById('loadingMessage').innerHTML = 'Failed to load music. Please try again.';
+            console.error("Error:", response.statusText);
         }
     } catch (error) {
-        // จัดการข้อผิดพลาดที่เกิดขึ้น เช่น เครือข่ายมีปัญหา
-        document.getElementById('loadingMessage').innerHTML = 'An error occurred: ' + error.message;
+        console.error("Fetch error:", error);
     }
+    
+    // เรียก fetchMusic ทุกๆ 5 นาที
+    setInterval(fetchMusic, 300000);
+    // เรียกใช้งานฟังก์ชัน fetchMusic เมื่อโหลดหน้าเว็บเสร็จ
+    window.onload = fetchMusic;
 }
-
-// เรียกใช้งานฟังก์ชัน fetchMusic เมื่อโหลดหน้าเว็บเสร็จ
-window.onload = fetchMusic;
