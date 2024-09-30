@@ -15,35 +15,36 @@ from keras.layers import BatchNormalization as BatchNorm
 from keras.utils import to_categorical
 from keras.callbacks import ModelCheckpoint
 
-JRpgModelPath = r"../ai/model/MusicGen_100.keras"
+jrpgModelPath = r"../ai/model/MusicGen_100.keras"
+jrpgNotePath = r"../ai/midi_songs/jrpg_note.txt"
 
-def get_notes():
-    """ Get all the notes and chords from the midi files in the midi_songs directory """
-    notes = []
+# def get_notes():
+#     """ Get all the notes and chords from the midi files in the midi_songs directory """
+#     notes = []
 
-    for file in glob.glob(r"../ai/midi_songs/*.mid"):
-        midi = converter.parse(file)
+#     for file in glob.glob(r"../ai/midi_songs/*.mid"):
+#         midi = converter.parse(file)
 
-        # print("Parsing %s" % file)
+#         # print("Parsing %s" % file)
 
-        notes_to_parse = None
+#         notes_to_parse = None
 
-        try:  # file has instrument parts
-            s2 = instrument.partitionByInstrument(midi)
-            notes_to_parse = s2.parts[0].recurse()
-        except:  # file has notes in a flat structure
-            notes_to_parse = midi.flat.notes
+#         try:  # file has instrument parts
+#             s2 = instrument.partitionByInstrument(midi)
+#             notes_to_parse = s2.parts[0].recurse()
+#         except:  # file has notes in a flat structure
+#             notes_to_parse = midi.flat.notes
 
-        for element in notes_to_parse:
-            if isinstance(element, note.Note):
-                notes.append(str(element.pitch))
-            elif isinstance(element, chord.Chord):
-                notes.append('.'.join(str(n) for n in element.normalOrder))
+#         for element in notes_to_parse:
+#             if isinstance(element, note.Note):
+#                 notes.append(str(element.pitch))
+#             elif isinstance(element, chord.Chord):
+#                 notes.append('.'.join(str(n) for n in element.normalOrder))
 
-    with open(r'../ai/data/notes', 'wb') as filepath:
-        pickle.dump(notes, filepath)
+#     with open(r'../ai/data/notes', 'wb') as filepath:
+#         pickle.dump(notes, filepath)
 
-    return notes
+#     return notes
 
 
 def prepare_sequences(notes, pitchnames, n_vocab):
@@ -161,14 +162,19 @@ def create_midi(prediction_output, instrumentType):
 
 def MusicTypeSelector(musicType):
     if musicType == "jrpg":
-        return JRpgModelPath
+        return jrpgModelPath, readMusicNote(jrpgNotePath)
     else : 
         print("Incorrect Type")
         exit()
 
+def readMusicNote(path) :
+    with open(path, 'r') as file:
+        note_string = file.read()
+    return note_string.split(',')
+
 def GenerateMusic(duration, musicType, instrumentType):
-    notes = get_notes()
-    checkpoint_path = MusicTypeSelector(musicType)
+    # notes = readMusicNote("../ai/midi_songs/jrpg_note.txt")
+    checkpoint_path, notes = MusicTypeSelector(musicType)
     n_vocab = len(set(notes))
     pitchnames = sorted(set(item for item in notes))
     network_input, network_output = prepare_sequences(notes, pitchnames, n_vocab)
