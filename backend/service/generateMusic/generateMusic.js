@@ -11,8 +11,11 @@ async function generateMusic(duration, genre, instrument, requestId) {
         const pythonScriptPath = path.join(__dirname, '../../../ai', 'interface.py');
         const pythonExecutable = '/opt/venv/bin/python3'; // Path to Python in the virtual environment
 
+        const arr = requestId.split("-");
+        const filename = arr[arr.length-1];
+
         // Spawn a new process to run the Python script
-        const pythonProcess = spawn(pythonExecutable, [pythonScriptPath, duration, genre, instrument]);
+        const pythonProcess = spawn(pythonExecutable, [pythonScriptPath, duration, genre, instrument, filename]);
 
         let outputData = ''; // To collect stdout data
         let errorData = ''; // To collect stderr data
@@ -34,7 +37,7 @@ async function generateMusic(duration, genre, instrument, requestId) {
             if (code === 0) {
                 console.log('Python process completed successfully.');
 
-                const generatedFilePath = `/path/to/generated_music/${requestId}.mid`; // Assume this is the output file path
+                const generatedFilePath = `/generated_music/${filename}.mid`; // Assume this is the output file path
                 
                 const cacheModel = {
                     request_id: requestId,
