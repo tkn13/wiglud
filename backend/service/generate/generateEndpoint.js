@@ -65,7 +65,7 @@ async function generateEndpoint(genre, duration, instrument, requestId) {
   const musicGenerationResult = generateMusic(duration, genre, instrument, requestId);
 
   const cacheModel = {
-    id: requestId,
+    request_id: requestId,
     genre: genre,
     duration: duration,
     instrument: instrument,

@@ -37,7 +37,7 @@ async function generateMusic(duration, genre, instrument, requestId) {
                 const generatedFilePath = `/path/to/generated_music/${requestId}.mid`; // Assume this is the output file path
                 
                 const cacheModel = {
-                    id: requestId,
+                    request_id: requestId,
                     genre: genre,
                     duration: duration,
                     instrument: instrument,
