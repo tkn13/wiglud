@@ -25,7 +25,7 @@ Request Parameters: cookie_id
         {
             "request_id": "0001",
             "genre": "Pop",
-            "duration": "1m",
+            "duration": 1,
             "instrument": "Guitar",
             "status": "Processing",
             "status_code": StatusCodes.PROCESSING,
@@ -39,7 +39,7 @@ Request Parameters: cookie_id
         {
             "request_id": "0001",
             "genre": "Pop",
-            "duration": "1m",
+            "duration": 1,
             "instrument": "Guitar",
             "status": "Success",
             "status_code": StatusCodes.OK,

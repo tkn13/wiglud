@@ -24,7 +24,8 @@ app.get('/api/music/status', async (req, res) => {
     const resualtCode = resualt.status_code;
     const requestData = resualt.message;
 
-    res.status(resualtCode).send(requestData);
+    //res.status(resualtCode).send(requestData);
+    res.send(requestData);
 
 });
 
@@ -41,7 +42,8 @@ app.get('/api/music/download/:id', async (req, res) => {
         return res.download(resualtFilePath);
     }
 
-    res.status(resualtCode).send(requestData);
+    //res.status(resualtCode).send(requestData);
+    res.send(requestData);
 });
 
 app.post('/api/music/generate', async (req, res) => {
@@ -52,15 +54,17 @@ app.post('/api/music/generate', async (req, res) => {
   
     const resualtCode = resualt.status_code;
     const requestData = resualt.message;
-  
-    res.status(resualtCode).send(requestData);
+    
+    //res.status(resualtCode).send(requestData);
+    res.send(requestData);
 });
 
 app.get('/api/music/ai', (req, res) => {
     // Use the Python executable from the virtual environment
     const pythonScriptPath = path.join('../ai/', 'interface.py');
-    const pythonExecutable = 'python'; // Path to Python in the virtual environment
-    const pythonProcess = spawn(pythonExecutable, [pythonScriptPath, 1, "jrpg", "saxophone"]);
+    const pythonExecutable = '/opt/venv/bin/python3'; // Path to Python in the virtual environment
+    const pythonProcess = spawn(pythonExecutable, [pythonScriptPath, 1, "jrpg", "piano"]);
+      
     let output = '';
     pythonProcess.stdout.on('data', (data) => {
         output += data.toString();

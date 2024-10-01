@@ -11,8 +11,7 @@ async function getCache(cacheId) {
     try {
         const cache = await fs.promises.readFile(cookiePath, 'utf8');
         const cacheObj = JSON.parse(cache);
-        const cacheObject = cacheObj.cache.find((cache) => cache.request_id === cacheId);
-
+        const cacheObject = cacheObj.cache.filter((cache) => cache.request_id === cacheId)[0];
         if (!cacheObject) return null
         return cacheObject;
 

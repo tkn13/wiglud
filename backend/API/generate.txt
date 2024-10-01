@@ -3,7 +3,6 @@ Purpose: To send a request for generating new music.
 Request Parameters: requestId
 
 //Request Body {
-    "request_id": "0004"
     "genre": "Pop",
     "duration": 1,
     "instrument": "Guitar"
