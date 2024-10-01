@@ -24,7 +24,8 @@ app.get('/api/music/status', async (req, res) => {
     const resualtCode = resualt.status_code;
     const requestData = resualt.message;
 
-    res.status(resualtCode).send(requestData);
+    //res.status(resualtCode).send(requestData);
+    res.send(requestData);
 
 });
 
@@ -41,7 +42,8 @@ app.get('/api/music/download/:id', async (req, res) => {
         return res.download(resualtFilePath);
     }
 
-    res.status(resualtCode).send(requestData);
+    //res.status(resualtCode).send(requestData);
+    res.send(requestData);
 });
 
 app.post('/api/music/generate', async (req, res) => {
@@ -53,7 +55,8 @@ app.post('/api/music/generate', async (req, res) => {
     const resualtCode = resualt.status_code;
     const requestData = resualt.message;
     
-    res.status(resualtCode).send(requestData);
+    //res.status(resualtCode).send(requestData);
+    res.send(requestData);
 });
 
 app.get('/api/music/ai', (req, res) => {
@@ -80,6 +83,6 @@ app.get('/api/music/ai', (req, res) => {
     });
   });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on http://${HOST}:${PORT}`);
 });
