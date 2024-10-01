@@ -2,6 +2,7 @@
 IMAGE_NAME = wiglud
 CONTAINER_NAME = wiglud
 APP_DIR = /app/ai
+CACHE_DIR = /app/backend/data/cache
 
 # Target to build the Docker image
 build:
@@ -9,7 +10,7 @@ build:
 
 # Target to run the Docker container
 run:
-	docker run -p 3000:3000 -v $(shell pwd)/ai:$(APP_DIR) --name $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run -p 3000:3000 -v $(shell pwd)/ai:$(APP_DIR) -v $(shell pwd)/backend/data/cache:$(CACHE_DIR) --name $(CONTAINER_NAME) $(IMAGE_NAME)
 
 # Target to build and run the Docker container
 all: build run
