@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const { addCache } = require("../../util/cache-modifier");
 const { cacheModel } = require("../../model/cacheModel");
+const { generateMusic } = require("../generateMusic/generateMusic");
 const Genre  = require("../../model/enum/Genre");
 const Instrument  = require("../../model/enum/Instrument");
 const WorkStatus = require("../../model/enum/WorkStatus");
@@ -61,8 +62,10 @@ async function generateEndpoint(genre, duration, instrument, requestId) {
     };
   }
 
+  const musicGenerationResult = generateMusic(duration, genre, instrument, requestId);
+
   const cacheModel = {
-    id: requestId,
+    request_id: requestId,
     genre: genre,
     duration: duration,
     instrument: instrument,
@@ -75,6 +78,7 @@ async function generateEndpoint(genre, duration, instrument, requestId) {
 
   try {
     await addCache(cacheModel);
+    console.log(cacheModel);
     return {
       status_code: StatusCodes.PROCESSING,
       message: {

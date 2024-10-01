@@ -1,0 +1,26 @@
+{
+    "cache": [
+        {
+            "id": "0001",
+            "genre": "Pop",
+            "duration": "1m",
+            "instrument": "Guitar",
+            "status": "No_Content",
+            "status_code": 204,
+            "message": "No file generation in progress",
+            "loading": null,
+            "file_url": null
+        },
+        {
+            "id": "0002",
+            "genre": "Pop",
+            "duration": "1m",
+            "instrument": "Guitar",
+            "status": "Success",
+            "status_code": 200,
+            "message": "File generation success",
+            "loading": true,
+            "file_url": null
+        }
+    ]
+}

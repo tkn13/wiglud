@@ -1,3 +1,48 @@
 {
-  "cache": []
+  "cache": [
+    {
+      "request_id": "0002",
+      "genre": "Pop",
+      "duration": "1m",
+      "instrument": "Guitar",
+      "status": "Processing",
+      "status_code": 102,
+      "message": "File generation in progress",
+      "loading": true,
+      "file_url": null
+    },
+    {
+      "request_id": "9d0f79d0-9b35-4d47-aaee-6aa561ad7c4f",
+      "genre": "Pop",
+      "duration": "1m",
+      "instrument": "Guitar",
+      "status": "Processing",
+      "status_code": 102,
+      "message": "File generation in progress",
+      "loading": true,
+      "file_url": null
+    },
+    {
+      "request_id": "e8741057-051e-49fd-b9a5-d97d4b01dd92",
+      "genre": "Pop",
+      "duration": "1m",
+      "instrument": "Guitar",
+      "status": "Processing",
+      "status_code": 102,
+      "message": "File generation in progress",
+      "loading": true,
+      "file_url": null
+    },
+    {
+      "request_id": "dcbbbf76-3d3e-4271-9c65-2e097e15aa43",
+      "genre": "Pop",
+      "duration": 1,
+      "instrument": "Guitar",
+      "status": "Processing",
+      "status_code": 102,
+      "message": "File generation in progress",
+      "loading": true,
+      "file_url": null
+    }
+  ]
 }
