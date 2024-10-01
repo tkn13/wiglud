@@ -60,7 +60,7 @@ app.get('/api/music/ai', (req, res) => {
     // Use the Python executable from the virtual environment
     const pythonScriptPath = path.join('../ai/', 'interface.py');
     const pythonExecutable = 'python'; // Path to Python in the virtual environment
-    const pythonProcess = spawn(pythonExecutable, [pythonScriptPath, 1, "jrpg", "piano"]);
+    const pythonProcess = spawn(pythonExecutable, [pythonScriptPath, 1, "jrpg", "saxophone"]);
     let output = '';
     pythonProcess.stdout.on('data', (data) => {
         output += data.toString();
