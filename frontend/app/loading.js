@@ -15,17 +15,11 @@ function displayRandomMessage() {
 
 displayRandomMessage();
 
-async function callMookFunction() {
-    return {
-        status_code: 102,
-        something: "txt"
-    }
 
-}
 
 async function fetchMusic() {
     try {
-        const data = await callMookFunction()
+        const data = await checkCookieStatus();
 
         // ตรวจสอบว่าการสร้างเพลงเสร็จสมบูรณ์หรือไม่
         if (data.status_code === 200) {
@@ -34,12 +28,13 @@ async function fetchMusic() {
         else if (data.status_code === 102) {
             console.log("idel");
         } else {
-            console.error("Something went wrong:", data.message);
+            console.log("Something went wrong:", data.message);
             window.location.href = 'index.html';
         }
 
     } catch (error) {
         console.error("Fetch error:", error);
+        window.location.href = 'index.html';
     }
 
 }
