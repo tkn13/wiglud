@@ -14,9 +14,11 @@ const downloadEndpoint = async (requestId) => {
             };
         }
 
-        const filePath = path.join(__dirname, '../../generated_music', `${requestId}.midi`);
+        const filePath = path.join(__dirname, '../../../generated_music', `${requestId}.mid`);
+        const fileExists = fs.existsSync(filePath);
+        console.log(filePath, fileExists);
 
-        if (fs.existsSync(filePath)) {
+        if (fileExists) {
             return {
                 status_code: StatusCodes.OK,
                 message: 'Music ready to download',

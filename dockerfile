@@ -26,6 +26,9 @@ EXPOSE 3000
 WORKDIR /app/ai
 COPY /ai /app/ai/
 
+WORKDIR /app/generated_music
+COPY /generated_music /app/generated_music/
+
 # Start the Node.js application
 WORKDIR /app/backend
 CMD ["npm", "start"]

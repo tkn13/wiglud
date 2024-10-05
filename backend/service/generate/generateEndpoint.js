@@ -57,7 +57,7 @@ async function generateEndpoint(genre, duration, instrument, requestId) {
     return {
       status_code: StatusCodes.BAD_REQUEST,
       message: {
-        message: `Invalid duration. Allowed durations are: ${Object.values(Duration).join(", ")}.`,
+        message: `Invalid duration. Allowed durations are: ${Object.values(Duration).join(", ")}. your duration is ${duration}`,
       },
     };
   }
@@ -81,9 +81,7 @@ async function generateEndpoint(genre, duration, instrument, requestId) {
     console.log(cacheModel);
     return {
       status_code: StatusCodes.PROCESSING,
-      message: {
-        cacheModel,
-      },
+      message: cacheModel,
     };
   } catch (err) {
     cacheModel.status = "Error";
@@ -91,9 +89,7 @@ async function generateEndpoint(genre, duration, instrument, requestId) {
     cacheModel.message = "Internal server error during file generation";
     return {
       status_code: StatusCodes.INTERNAL_SERVER_ERROR,
-      message: {
-        cacheModel,
-      },
+      message: cacheModel,
     };
   }
 }

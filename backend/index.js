@@ -1,12 +1,14 @@
 const express = require("express");
-const cookieParser = require('cookie-parser');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
+const cors = require('cors');
 const { spawn } = require('child_process');
 const path = require('path');
 
 app.use(express.json());
-app.use(cookieParser());
+
+app.use(cors());
+
 
 const PORT = 3000;
 const HOST = "localhost";
@@ -15,9 +17,11 @@ const { statusEndpoint } = require('./service/status/statusEndpoint');
 const { generateEndpoint } = require("./service/generate/generateEndpoint");
 const { downloadEndpoint } = require("./service/download/downloadEndpoint");
 
-app.get('/api/music/status', async (req, res) => {
 
-    const cookie_id = req.cookies.cookie_id;
+app.post('/api/music/status', async (req, res) => {
+
+    const {cookie_id} = req.body
+    console.log(cookie_id)
 
     const resualt = await statusEndpoint(cookie_id);
 
@@ -38,17 +42,24 @@ app.get('/api/music/download/:id', async (req, res) => {
     const requestData = resualt.message;
     const resualtFilePath = resualt.filePath;
 
-    if (resualtFilePath) {
-        return res.download(resualtFilePath);
-    }
+    if (resualtFilePath !== null) {
+        res.download(resualtFilePath);
+        return
+    } 
 
     //res.status(resualtCode).send(requestData);
-    res.send(requestData);
+    const errorFilePath = path.join(__dirname, 'model', 'html', 'error.html');
+    res.status(resualtCode).sendFile(errorFilePath);
+    
 });
 
 app.post('/api/music/generate', async (req, res) => {
-    const { genre, duration, instrument } = req.body;
+    let { genre, duration, instrument } = req.body;
+    duration = parseInt(duration);
     const requestId = uuidv4();
+
+    console.log(genre, duration, instrument, requestId);
+    console.log(req.body);
   
     const resualt = await generateEndpoint(genre, duration, instrument, requestId);
   

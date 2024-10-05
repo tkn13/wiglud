@@ -1,48 +1,48 @@
 {
   "cache": [
     {
-      "request_id": "0002",
-      "genre": "Pop",
-      "duration": "1m",
-      "instrument": "Guitar",
-      "status": "Processing",
-      "status_code": 102,
-      "message": "File generation in progress",
-      "loading": true,
-      "file_url": null
-    },
-    {
-      "request_id": "9d0f79d0-9b35-4d47-aaee-6aa561ad7c4f",
-      "genre": "Pop",
-      "duration": "1m",
-      "instrument": "Guitar",
-      "status": "Processing",
-      "status_code": 102,
-      "message": "File generation in progress",
-      "loading": true,
-      "file_url": null
-    },
-    {
-      "request_id": "e8741057-051e-49fd-b9a5-d97d4b01dd92",
-      "genre": "Pop",
-      "duration": "1m",
-      "instrument": "Guitar",
-      "status": "Processing",
-      "status_code": 102,
-      "message": "File generation in progress",
-      "loading": true,
-      "file_url": null
-    },
-    {
-      "request_id": "dcbbbf76-3d3e-4271-9c65-2e097e15aa43",
-      "genre": "Pop",
+      "request_id": "f157ae8d-c988-4e8f-96b9-9869e586036c",
+      "genre": "Rock",
       "duration": 1,
       "instrument": "Guitar",
-      "status": "Processing",
-      "status_code": 102,
+      "status": "Success",
+      "status_code": 200,
       "message": "File generation in progress",
-      "loading": true,
-      "file_url": null
+      "loading": false,
+      "file_url": "9869e586036c"
+    },
+    {
+      "request_id": "3c3d8412-85be-452e-893a-57e63b7fabc0",
+      "genre": "Rock",
+      "duration": 1,
+      "instrument": "Guitar",
+      "status": "Success",
+      "status_code": 200,
+      "message": "Music generation complete",
+      "loading": false,
+      "file_url": "/generated_music/57e63b7fabc0.mid"
+    },
+    {
+      "request_id": "aee6d779-8bc0-4cdc-994d-1e18346e9bc8",
+      "genre": "Rock",
+      "duration": 1,
+      "instrument": "Guitar",
+      "status": "Success",
+      "status_code": 200,
+      "message": "Music generation complete",
+      "loading": false,
+      "file_url": "test_output"
+    },
+    {
+      "request_id": "5155fd4b-2257-4cfa-8022-a6a78f4fc712",
+      "genre": "Rock",
+      "duration": 1,
+      "instrument": "Guitar",
+      "status": "Success",
+      "status_code": 200,
+      "message": "Music generation complete",
+      "loading": false,
+      "file_url": "test_output"
     }
   ]
 }

@@ -147,7 +147,7 @@ def create_midi(prediction_output):
 
     midi_stream = stream.Stream(output_notes)
     midi_stream.insert(0, instrument.Soprano())
-    midi_stream.write('midi', fp='../ai/test_output.mid')
+    midi_stream.write('midi', fp='../generated_music/test_output.mid')
 
 notes = get_notes()
 
