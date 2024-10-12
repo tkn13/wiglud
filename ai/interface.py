@@ -151,8 +151,7 @@ def MusicTypeSelector(musicType):
     elif music_type == "schubert":
         return schubertModelPath, readMusicNote(schubertNotePath)
     else : 
-        print("Incorrect Type")
-        exit()
+        return beethModelPath, readMusicNote(beethNotePath)
 
 def readMusicNote(path) :
     """ Load the notes from the 'notes' file """
