@@ -37,10 +37,8 @@ async function generateMusic(duration, genre, instrument, requestId) {
             if (code === 0) {
                 console.log('Python process completed successfully.');
 
-                const generatedFilePath = `${filename}.mid`; // Assume this is the output file path
+                const generatedFilePath = filename; // Assume this is the output file path
                 
-                // THIS USE FOR TEST DONT FORGET TO REMOVE IT********************************
-                const tempFile = "test_output"
 
                 const cacheModel = {
                     request_id: requestId,
@@ -51,7 +49,7 @@ async function generateMusic(duration, genre, instrument, requestId) {
                     status_code: StatusCodes.OK,
                     message: "Music generation complete",
                     loading: false,
-                    file_url: "test_output"
+                    file_url: generatedFilePath
                 };
 
                 try {

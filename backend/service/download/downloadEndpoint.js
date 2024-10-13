@@ -14,7 +14,7 @@ const downloadEndpoint = async (requestId) => {
             };
         }
 
-        const filePath = path.join(__dirname, '../../../generated_music', `${requestId}.mid`);
+        const filePath = path.join(__dirname, '../../../generated_music', `${requestId}.mp3`);
         const fileExists = fs.existsSync(filePath);
         console.log(filePath, fileExists);
 

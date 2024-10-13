@@ -15,6 +15,11 @@ from keras.layers import BatchNormalization as BatchNorm
 from keras.utils import to_categorical
 from keras.callbacks import ModelCheckpoint
 
+from midi2audio import FluidSynth
+from pydub import AudioSegment
+
+from time import sleep
+
 beethModelPath = r"../ai/model/model_beeth.keras"
 beethNotePath = r"../ai/midi_songs/beeth_note"
 
@@ -142,6 +147,13 @@ def create_midi(prediction_output, instrument_type, file_name):
     midi_stream = stream.Stream(output_notes)
     midi_stream.insert(0, chosen_instrument)
     midi_stream.write('midi', fp=f'../generated_music/{file_name}.mid')
+    
+    sleep(3)
+
+    # Convert MIDI to MP3
+    midiFile = '../generated_music/' + file_name + '.mid'
+    outputFile = '../generated_music/' + file_name + '.mp3'
+    midi_to_mp3(midiFile, 'FluidR3_GM.sf2', outputFile)
 
 def MusicTypeSelector(musicType):
     if musicType == "beeth":
@@ -172,6 +184,17 @@ def GenerateMusic(duration, music_type, instrument_type, file_name):
 
     prediction_output = generate_notes(model, network_input, pitchnames, n_vocab, duration)
     create_midi(prediction_output, instrument_type, file_name)
+
+def midi_to_mp3(midi_file, soundfont_file, output_mp3):
+    # Convert MIDI to WAV using FluidSynth
+    fs = FluidSynth(soundfont_file)
+    wav_output = 'output.wav'
+    fs.midi_to_audio(midi_file, wav_output)
+
+    # Convert WAV to MP3 using pydub
+    audio = AudioSegment.from_wav(wav_output)
+    audio.export(output_mp3, format="mp3")
+    print(f"Conversion completed: {output_mp3}")
 
 if __name__ == "__main__":
     # Ensure the function name and parameters are passed

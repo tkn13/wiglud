@@ -1,7 +1,14 @@
 const Instrument = Object.freeze({
     default: 'Default',
-    Guitra: 'Guitar',
+    Piano: 'Piano',
+    Guitar: 'Guitar',
     Saxophone: 'Saxophone',
+    Violin: 'Violin',
+    ElectricGuitar: 'Electric Guitar',
+    Flute: 'Flute',
+    Cello: 'Cello',
+    Clarinet: 'Clarinet',
+    Harp: 'Harp'
 });
 
 module.exports = Instrument;

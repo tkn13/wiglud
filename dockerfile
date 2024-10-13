@@ -1,34 +1,42 @@
+# Base image with Node.js
 FROM node:20
 
-# Update and install Python
-RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
+# Update and install Python, FluidSynth, and ffmpeg
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    fluidsynth \
+    ffmpeg
 
-# Create a virtual environment for Python
-RUN python3 -m venv /opt/venv
+# Create a Python virtual environment and install Python dependencies
+RUN python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install --upgrade pip \
+    && /opt/venv/bin/pip install numpy music21 keras tensorflow pydub midi2audio
 
-# Upgrade pip in the virtual environment
-RUN /opt/venv/bin/pip install --upgrade pip \
-&& /opt/venv/bin/pip install numpy music21 keras tensorflow
+# Set PATH to use the virtual environment by default
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Create app directory
+# Copy your project files to the Docker container
+WORKDIR /app
+
+# Copy Node.js backend files and install Node.js dependencies
+COPY /backend/package*.json ./backend/
 WORKDIR /app/backend
-
-# Setup Node.js
-COPY /backend/package*.json ./
 RUN npm install
+COPY /backend ./
 
-COPY /backend .
+# Copy Python AI-related files and the SoundFont file in /ai
+WORKDIR /app/ai
+COPY /ai .
 
-# Expose the port your app runs on
+# Copy generated_music folder
+WORKDIR /app/generated_music
+COPY /generated_music .
+
+# Expose the port your Node.js app uses
 EXPOSE 3000
 
-# Setup Python
-WORKDIR /app/ai
-COPY /ai /app/ai/
-
-WORKDIR /app/generated_music
-COPY /generated_music /app/generated_music/
-
-# Start the Node.js application
+# Command to start the Node.js application
 WORKDIR /app/backend
 CMD ["npm", "start"]

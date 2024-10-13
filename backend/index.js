@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 
-const PORT = 3001;
+const PORT = 3000;
 const HOST = "localhost";
 
 
@@ -74,9 +74,17 @@ app.post('/api/music/generate', async (req, res) => {
 
 app.get('/api/music/ai', (req, res) => {
     // Use the Python executable from the virtual environment
-    const pythonScriptPath = path.join('../ai/', 'interface.py');
-    const pythonExecutable = 'python'; // Path to Python in the virtual environment
-    const pythonProcess = spawn(pythonExecutable, [pythonScriptPath, 1, "beeth", "piano", "test"]);
+
+    const pythonScriptPath = path.join(__dirname, '../ai', 'interface.py');
+    const pythonExecutable = '/opt/venv/bin/python3'; // Path to Python in the virtual environment
+
+    const requestId = uuidv4();
+
+    const arr = requestId.split("-");
+    const filename = arr[arr.length-1];
+
+        // Spawn a new process to run the Python script
+    const pythonProcess = spawn(pythonExecutable, [pythonScriptPath, 1, "beeth", "piano", filename]);
       
     let output = '';
     pythonProcess.stdout.on('data', (data) => {
