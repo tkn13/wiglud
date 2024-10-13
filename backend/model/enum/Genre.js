@@ -1,7 +1,8 @@
 const Genre = Object.freeze({
-    default: 'default',
-    Pop: 'Pop',
-    Rock: 'Rock'
+    default: 'Default',
+    Beethoven: 'beeth',
+    Mendelssohn: 'mendelssohn',
+    Schubert: 'schubert',
 
 });
 

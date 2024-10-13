@@ -3,32 +3,31 @@ Purpose: To send a request for generating new music.
 Request Parameters: requestId
 
 //Request Body {
-    "requestId": "0004"
-    "Genre": "Pop",
-    "Duration": 1,
-    "Instrument": "Guitar"
+    "genre": "Pop",
+    "duration": 1,
+    "instrument": "Guitar"
 }
 
 //Processing Response {
-    "requestId": "0004"
-    "Genre": "Pop",
-    "Duration": 1,
-    "Instrument": "Guitar",
+    "request_id": "0004"
+    "genre": "Pop",
+    "duration": 1,
+    "instrument": "Guitar",
     "status": "Processing",
-    "statusCode": 102,
+    "status_code": StatusCodes.PROCESSING,
     "message": "File generation in progress",
     "loading": true,
-    "fileUrl": null
+    "file_url": null
 }
 
 or //Error Response {
-    "requestId": "0004"
-    "Genre": "Pop",
-    "Duration": 1,
-    "Instrument": "Guitar",
+    "request_id": "0004"
+    "genre": "Pop",
+    "duration": 1,
+    "instrument": "Guitar",
     "status": "Error",
-    "statusCode": 500,
+    "status_code": StatusCodes.INTERNAL_SERVER_ERROR,
     "message": "Internal server error during file generation",
     "loading": false,
-    "fileUrl": null
+    "file_url": null
 }

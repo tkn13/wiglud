@@ -3,7 +3,7 @@ const Instrument = require('./enum/Instrument');
 const WorkStatus = require('./enum/WorkStatus');
 
 const cacheModel = {
-    "id": "",
+    "request_id": "",
     "genre": Genre.default,
     "duration": "",
     "instrument": Instrument.default,

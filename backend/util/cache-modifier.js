@@ -1,29 +1,3 @@
-/*
-
-{
-    cache:[
-        {cacheObject},
-    ]
-}
-
-
-// Cache Object
-{
-
-    id: "0001",
-    genre: "Pop",
-    duration: "1m",
-    instrument: "Guitar",
-    status: "Processing",
-    status_Code: 102,
-    message: "File generation in progress",
-    loading: true,
-    file_url: null,
-
-}
-
-*/
-
 const Path = require('path');
 const fs = require('fs');
 
@@ -37,8 +11,7 @@ async function getCache(cacheId) {
     try {
         const cache = await fs.promises.readFile(cookiePath, 'utf8');
         const cacheObj = JSON.parse(cache);
-        const cacheObject = cacheObj.cache.find((cache) => cache.id === cacheId);
-
+        const cacheObject = cacheObj.cache.filter((cache) => cache.request_id === cacheId)[0];
         if (!cacheObject) return null
         return cacheObject;
 
@@ -64,12 +37,6 @@ async function addCache(cacheObject) {
 
 //this function will write over the existing cache array with the new cache array
 async function setCache(cacheObjectArray) {
-    /*
-        input
-        {
-            cache: [{cacheObject}]
-        }
-    */
     try {
         await fs.promises.writeFile(cookiePath, JSON.stringify(cacheObjectArray, null, 2), { flag: 'w' });
     } catch (err) {
@@ -82,7 +49,7 @@ async function deleteCache(cacheId) {
     try {
         const cache = await fs.promises.readFile(cookiePath, 'utf8');
         const cacheObj = JSON.parse(cache);
-        const updatedCache = cacheObj.cache.filter((cache) => cache.id !== cacheId);
+        const updatedCache = cacheObj.cache.filter((cache) => cache.request_id !== cacheId);
         cacheObj.cache = updatedCache;
         await setCache(cacheObj);
 
