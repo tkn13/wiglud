@@ -7,10 +7,10 @@ async function checkStatus() {
         console.log(data);
         if (statusCode === 102) {
             // ถ้าคุกกี้อยู่ในสถานะการสร้างเพลง ให้ไปยังหน้าสถานะการสร้างเพลง (เช่น index2.html)
-            window.location.href = 'loading.html';
+            window.location.href = 'loading';
         } else if (statusCode === 200) {
             // ถ้าเพลงพร้อมแล้ว ให้ไปหน้าดาวน์โหลด
-            window.location.href = 'download.html';
+            window.location.href = 'download';
         } 
 
         //This line is not needed it will cause the infinite loop
@@ -58,7 +58,7 @@ function generateMusic() {
                 setCookie(data.request_id);
                 // เปลี่ยนหน้าไปที่ index2.html ถ้าการสร้างเพลงสำเร็จ set cookie เข้ามา
 
-                window.location.href = 'download.html';
+                window.location.href = 'loading';
             } else {
                 // แสดงข้อความแจ้งข้อผิดพลาด
                 alert('Error generating music: ' + statusCode);

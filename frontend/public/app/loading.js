@@ -23,18 +23,18 @@ async function fetchMusic() {
 
         // ตรวจสอบว่าการสร้างเพลงเสร็จสมบูรณ์หรือไม่
         if (data.status_code === 200) {
-            window.location.href = 'download.html';
+            window.location.href = 'download';
         }
         else if (data.status_code === 102) {
             console.log("idel");
         } else {
             console.log("Something went wrong:", data.message);
-            window.location.href = 'index.html';
+            window.location.href = 'index';
         }
 
     } catch (error) {
         console.error("Fetch error:", error);
-        window.location.href = 'index.html';
+        window.location.href = 'index';
     }
 
 }

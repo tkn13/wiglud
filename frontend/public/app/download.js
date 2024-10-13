@@ -2,7 +2,7 @@ let downloadPath = "";
 
 function generateAgain() {
     clearCookie();
-    window.location.href = 'index.html';
+    window.location.href = 'index';
 }
 
 
@@ -44,16 +44,16 @@ async function getDownloadLink() {
             }
 
             else if(data.status_code === 102){
-              window.location.href = "loading.html"
+              window.location.href = "loading"
             }
             else {
-              window.location.href = "index.html"
+              window.location.href = "index"
             }
 
 
         } catch(e){
             console.error(e)
-            window.location.href = "index.html"
+            window.location.href = "index"
         }
 }
 

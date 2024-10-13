@@ -1,0 +1,15 @@
+version: '3'
+services:
+  backend:
+    image: backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./generated_music:/app/generated_music
+      - ./backend/data/cache:/app/backend/data/cache
+  frontend:
+    image: frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
